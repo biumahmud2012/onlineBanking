@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Customer Deposit Form</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./userTemplate.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="cust_transaction">
+                        <p:growl id="msg" showDetail="true"/>
+                        <p:panel header="Make your Transaction">
+                            <p:panelGrid columns="2">
+
+                                <h:outputLabel value="Account ID :"/>
+
+                                <p:selectOneMenu value="#{custTransaction.account_id}" id="accID">  
+                                    <f:selectItem itemLabel="Select Account" itemValue="" />
+                                    <f:selectItems value="#{mapAccount.addAccountID()}"/>
+                                </p:selectOneMenu>
+
+                                <h:outputLabel value="Account ID To : "/>
+                                <p:selectOneMenu value="#{custTransaction.account_id_to}" id="accIDto" required="true" requiredMessage="Required Field must not empty">  
+                                    <f:selectItem itemLabel="Select Account" itemValue="0" />
+                                    <f:selectItems value="#{mapAccount.addAccountID()}"/>
+                                </p:selectOneMenu>
+
+                                <h:outputLabel value="Transaction Type : "/>
+                                <p:selectOneRadio id="tType"  value="#{custTransaction.transaction_type}" required="true" requiredMessage="Required Field must not empty">
+                                    <f:selectItem itemLabel="Transfer" itemValue="transfer"/>
+                                </p:selectOneRadio>
+
+                                <h:outputLabel value="Transaction Amount : "/>
+                                <p:inputText id="transAmount" value="#{custTransaction.transaction_amount}" required="true" requiredMessage="Required Field must not empty"/>
+
+                                <h:outputLabel value="Current Balance : "/>
+                                <p:inputText id="curBal" value="#{custTransaction.currentBallance}" required="true" requiredMessage="Required Field must not empty"/>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Make Transaction" action="#{custTransaction.addTransaction()}" update="msg"/>
+                                    <p:commandButton value="See Current Balance" action="#{custTransaction.currentBalance()}" update="curBal"/>
+                                </f:facet>
+                            </p:panelGrid>
+                        </p:panel> 
+                    </h:form>
+
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

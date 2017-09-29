@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+       xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <!--<h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>-->
+
+        <h:outputStylesheet name="./css/jquery-ui-1.10.3.min.css"/>
+        <h:outputStylesheet name="./css/flaty.bootstrap.min.css"/>
+        <h:outputStylesheet name="./css/application_admin.css"/>
+        <h:outputStylesheet name="./css/application_site_login.css"/>
+
+<!--        <h:outputScript name="./js/jquery-1.10.1.js"/>
+        <h:outputScript name="./js/jquery-ui-1.10.3.js"/>-->
+        <h:outputScript name="./js/bootstrap.js"/>
+        <h:outputScript name="./js/application.js"/>
+
+        <link rel="shortcut icon" href="../images/molecue.png"
+              type="image/x-icon" />
+        <title>
+            <ui:insert name="title">
+                Online Bank Management
+            </ui:insert>
+        </title>
+    </h:head>
+
+    <h:body>
+        <div id="page_container">
+
+            <div id="header" class="navbar">
+                <ui:include src="adminTemplateHeader.xhtml"/>
+            </div>
+
+            <div id="body" class="container-fuid">
+                <div id="left" class="span5">
+                    <ui:include src="adminTemplateLeft.xhtml"/>
+                </div>
+
+                <div id="content" class="span9"> 
+                    <ui:insert name="content">Content</ui:insert>
+                    <!--<ui:include src="adminPanel.xhtml"/>-->
+                </div>
+
+            </div>
+            <div id="footer" class="clear">
+                <ui:include src="adminTemplateFooter.xhtml"/>
+            </div>
+        </div>
+    </h:body>
+
+</html>

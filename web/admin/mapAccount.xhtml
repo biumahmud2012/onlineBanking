@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+--> 
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Account Maping</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./adminTemplate.xhtml">
+
+        <ui:define name="content">
+        
+                <f:view>
+                    <h:form id="mapAccount">
+                        <p:growl id="msg" showDetail="true"/>
+                        <p:panel header="Create Map Account">
+                            <p:panelGrid columns="2">
+
+                                <h:outputLabel value="Account ID :"/>
+
+                                <p:selectOneMenu value="#{mapAccount.account_id}" id="accID" required="true" requiredMessage="Required Field must not empty">  
+                                    <f:selectItem itemLabel="Select Account" itemValue="" />
+                                    <f:selectItems value="#{mapAccount.addAccountID()}"/>
+                                    <p:ajax event="change" update="acStatus" listener="#{mapAccount.seeAcStatus()}"/>
+                                </p:selectOneMenu>
+
+                                <h:outputLabel value="Account Status :"/>
+                                <h:outputLabel value="#{mapAccount.acStatus}" id="acStatus"/>
+                                
+                                <h:outputLabel value="Customer ID : "/>
+                                <p:selectOneMenu value="#{mapAccount.customer_name}" id="cusID" required="true" requiredMessage="Required Field must not empty">  
+                                    <f:selectItem itemLabel="Select Customer" itemValue="" />
+                                    <f:selectItems value="#{mapAccount.addCustomerID()}"/>
+                                </p:selectOneMenu>
+
+                                <h:outputLabel value="Nominee ID : "/>
+                                <p:selectOneMenu value="#{mapAccount.nominee_name}" id="nomID" required="true" requiredMessage="Required Field must not empty">  
+                                    <f:selectItem itemLabel="Select Nominee" itemValue="" />
+                                    <f:selectItems value="#{mapAccount.addNomineeID()}"/>
+                                </p:selectOneMenu>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Create Map Account" action="#{mapAccount.addMapAccount}" update="msg, :dtform"/>
+                                </f:facet>
+                            </p:panelGrid>
+                        </p:panel> 
+                    </h:form>
+
+                    <h:form id="dtform">
+                        <p:growl id="grl" autoUpdate="false" showDetail="true"/>
+                        <p:dataTable id="dtt"  value="#{mapAccount.detailMapAccount}" var="item" editable="true" resizableColumns="true" rowKey="#{item.mapAccount_number}">
+
+                            <p:column headerText="SL No." >                
+                                #{item.map_id}
+                            </p:column>
+                            <p:column headerText="Account Id ">
+                                #{item.account_id}
+
+                            </p:column>
+                            <p:column headerText="Customer Id">
+                                #{item.customer_name}
+                            </p:column>
+
+                            <p:column headerText="Nominee Id">
+                                #{item.nominee_name}
+                            </p:column>
+
+                            <p:column headerText="Option" style="text-align: center; width:110px;">                                    
+                                <p:commandButton value="Edit" action="#{mapAccount.doSetSelectedRow()}"
+                                                 oncomplete="PF('editdialog').show()" update=":dtform:editpane" icon="ui-icon-pencil" style="font-size: 7pt;">
+                                    <f:setPropertyActionListener target="#{mapAccount}" value="#{item}"/>
+                                </p:commandButton>
+                                <p:spacer width="5"/>
+                                <p:commandButton value="Delete" action="#{mapAccount.deleteData()}" icon="ui-icon-close" style="color: #D20005;font-size: 7pt;" update=":dtform:grl,:dtform:dtt">
+                                    <f:setPropertyActionListener target="#{mapAccount}" value="#{item}"/>
+                                </p:commandButton>
+                            </p:column>              
+                        </p:dataTable>
+
+                        <p:dialog id="dialog" widgetVar="editdialog" showEffect="clip" hideEffect="fold" resizable="false" header="Edit User Role">
+                            <p:panelGrid id="editpane"  columns="2">
+
+                                <p:outputLabel value="Account Id :"/>
+                                <p:inputText value="#{mapAccount.account_id}" readonly="true"/>
+
+                                <p:outputLabel value="Customer Id :"/>                
+                                <p:inputText value="#{mapAccount.customer_name}" readonly="true"/>
+                               
+                                <p:outputLabel value="Nominee Id :"/>                
+                                <p:selectOneMenu value="#{mapAccount.nominee_name}" id="nomID">  
+                                    <f:selectItem itemLabel="Select Nominee" itemValue="" />
+                                    <f:selectItems value="#{mapAccount.addNomineeID()}"/>
+                                </p:selectOneMenu>
+                                
+                                <p:commandButton value="Update" action="#{mapAccount.updateData()}" update=":dtform:grl,:dtform:dtt" oncomplete="PF('editdialog').hide()"/>
+                            </p:panelGrid>
+
+                        </p:dialog>
+                    </h:form>   
+                </f:view>
+            </ui:define>
+            </ui:composition>
+    </h:body>
+</html>

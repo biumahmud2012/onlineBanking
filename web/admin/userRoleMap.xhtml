@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head> 
+        <title>Registration</title> 
+    </h:head>
+    <h:body>
+        <ui:composition template="./adminTemplate.xhtml">
+
+            <ui:define name="content">
+                <h:form id="userRoleMap">
+                    <p:growl id="msg" showDetail="true" life="6000"/>
+                    <p:panel header="Add User Role Map">
+
+                        <p:panelGrid columns="2">
+
+                            <h:outputLabel value="Customer ID :"/>
+                            <p:selectOneMenu value="#{userRoleMap.customer_id}" id="cusID" required="true" requiredMessage="Required Field must not empty">  
+                                <f:selectItem itemLabel="Select Customer" itemValue="" />
+                                <f:selectItems value="#{mapAccount.addCustomerID()}"/>
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="User Role ID : "/>
+                            <p:selectOneMenu value="#{userRoleMap.user_role_id}" id="userRoleID" required="true" requiredMessage="Required Field must not empty">  
+                                <f:selectItem itemLabel="Select Customer" itemValue="" />
+                                <f:selectItems value="#{userRoleMap.addUserRoleID()}"/>
+                            </p:selectOneMenu>
+
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Add User Role Map" action="#{userRoleMap.addUserRoleMap()}" update="msg, :dtform"/>
+                            </f:facet>
+                        </p:panelGrid>       
+                    </p:panel>
+                </h:form>
+
+
+                <h:form id="dtform">
+                    <p:growl id="grl" autoUpdate="false" showDetail="true"/>
+                    <p:dataTable id="dtt"  value="#{userRoleMap.detailUserRoleMap}" var="item" editable="true" rowKey="#{item.userRoleMap_number}" style="font-size: 9pt;">
+
+                        <p:column headerText="SL No." style="text-align: center; width: 50px;">                
+                            #{item.user_role_map_id}
+                        </p:column>
+                        <p:column headerText="Customer Id " style="text-align: center;">
+                            #{item.customer_id}
+
+                        </p:column>
+                        <p:column headerText="User Role Id" style="text-align: center; width: 27%">
+                            #{item.user_role_id}
+
+                        </p:column>
+
+                        <p:column headerText="Option" style="text-align: center; width:110px;">                                    
+                            <p:commandButton value="Edit" action="#{userRoleMap.doSetSelectedRow()}"
+                                             oncomplete="PF('editdialog').show()" update=":dtform:editpane" icon="ui-icon-pencil" style="font-size: 7pt;">
+                                <f:setPropertyActionListener target="#{userRoleMap}" value="#{item}"/>
+                            </p:commandButton>
+                            <p:spacer width="5"/>
+                            <p:commandButton value="Delete" action="#{userRoleMap.deleteData()}" icon="ui-icon-close" style="color: #D20005;font-size: 7pt;" update=":dtform:grl,:dtform:dtt">
+                                <f:setPropertyActionListener target="#{userRoleMap}" value="#{item}"/>
+                            </p:commandButton>
+                        </p:column>              
+                    </p:dataTable>
+
+                    <p:dialog id="dialog" widgetVar="editdialog" showEffect="clip" hideEffect="fold" resizable="false" header="Edit User Role">
+                        <p:panelGrid id="editpane"  columns="2">
+
+                            <p:outputLabel value="Customer Id :"/>
+                            <p:inputText value="#{userRoleMap.customer_id}" readonly="true"/>
+                            
+                            <h:outputLabel value="User Role ID : "/>
+                            <p:selectOneMenu value="#{userRoleMap.user_role_id}" id="userRoleID">  
+                                <f:selectItem itemLabel="Select User Role" itemValue="" />
+                                <f:selectItems value="#{userRoleMap.addUserRoleID()}"/>
+                            </p:selectOneMenu>
+                            <p:spacer/>
+                            <p:commandButton value="Update" action="#{userRoleMap.updateData()}" update=":dtform:grl,:dtform:dtt" oncomplete="PF('editdialog').hide()"/>
+                        </p:panelGrid>
+
+                    </p:dialog>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

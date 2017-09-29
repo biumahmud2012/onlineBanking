@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Customer Registration</title>
+
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form enctype="multipart/form-data" > 
+                <p:growl id="msg" showDetail="true" life="1000"/>
+                <p:outputPanel>
+         <!--      <p:panel header="Add new Customer" styleClass="pg"> -->
+                    <p:panelGrid columns="2" styleClass="pg" >
+                        <p:outputLabel  value="NRIC: " />
+                        <p:inputText  value="#{customer.nric}" required="true" requiredMessage="Required Field must not empty"/>
+                        <p:outputLabel  value="User Name: " />
+                        <p:inputText  value="#{customer.username}" required="true" requiredMessage="Required Field must not empty"/>
+                        <p:outputLabel  value="Password: " />
+                        <p:password  value="#{customer.password}" required="true" requiredMessage="Required Field must not empty"/>
+                        <p:outputLabel  value="Given Name: " />
+                        <p:inputText  value="#{customer.givenname}" required="true" requiredMessage="Required Field must not empty"/>
+                        <p:outputLabel value="Customer Photo :"/>
+                        <p:fileUpload value="#{customer.uploadPhoto}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                        <p:outputLabel  value="Address: " />
+                        <p:inputTextarea  value="#{customer.address}" required="true" requiredMessage="Required Field must not empty"/>
+                        <p:outputLabel value="Gender: " />
+                        <p:selectOneRadio   value="#{customer.gender}" required="true" requiredMessage="Required Field must not empty">
+                            <f:selectItem itemLabel="Male" itemValue="male"/>
+                            <f:selectItem itemLabel="Female" itemValue="female"/>
+                        </p:selectOneRadio>
+                        <p:outputLabel value="Nationality: " />
+                        <p:inputText   value="#{customer.nationality}" required="true" requiredMessage="Required Field must not empty"/>
+                        <p:outputLabel value="Date of Birth: " />
+                        <p:calendar  value="#{customer.dob}" mode="popup" navigator="true" required="true" requiredMessage="Required Field must not empty"/>
+                        <p:outputLabel  value="Date of Join: " />
+                        <p:calendar   value="#{customer.date_of_join}" mode="popup" navigator="true" showOn="button" required="true" requiredMessage="Required Field must not empty"/>
+
+                        <p:outputLabel value="Officer Approval: "/>
+                        <p:selectOneRadio   value="#{customer.approval_officer}" required="true" requiredMessage="Required Field must not empty">
+                            <f:selectItem itemLabel="Active" itemValue="true"/>
+                            <f:selectItem itemLabel="In Active" itemValue="false"/>
+                        </p:selectOneRadio>
+
+                        <p:outputLabel value="Manager Approval: "/>
+                        <p:selectOneRadio   value="#{customer.approval_manager}" required="true" requiredMessage="Required Field must not empty">
+                            <f:selectItem itemLabel="Active" itemValue="true"/>
+                            <f:selectItem itemLabel="In Active" itemValue="false"/>
+                        </p:selectOneRadio>
+
+                        <f:facet name="footer">
+                            <h:commandButton value="Add Customer" action="#{customer.addCustomer()}" />
+                        </f:facet>
+                    </p:panelGrid> 
+
+            <!--    </p:panel>  -->
+                </p:outputPanel>
+            </h:form>
+        </f:view>
+    </h:body>
+</html>

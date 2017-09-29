@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Online banking</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body> 
+        <ui:composition template="./adminTemplate.xhtml">
+            <ui:define name="content">
+             <h:form id="dtform">
+                    <p:growl id="grl" autoUpdate="false" showDetail="true"/>
+                    <p:dataTable id="dtt"  value="#{nominee.detailNominee}" var="item" editable="true" rowKey="#{item.nominee_number}" style="font-size: 9pt;">
+
+                        <p:column headerText="SL No">                
+                            #{item.nominee_id}
+                        </p:column>
+                        <p:column headerText="NRIC">
+                            #{item.nric}
+
+                        </p:column>
+                        <p:column headerText="Given Name">
+                            #{item.givenname}
+
+                        </p:column>
+                        <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Image" />
+                                </f:facet>
+                            <h:outputLink value="DisplayNomImage?nominee_id=#{item.nominee_id}" target="_blank" >
+                                <h:graphicImage value="DisplayNomImage?nominee_id=#{item.nominee_id}" width="50" height="50"></h:graphicImage>
+                                </h:outputLink>
+                            </p:column>
+
+                        <p:column headerText="Address">                
+                            #{item.address}
+                        </p:column>
+
+                        <p:column headerText="Gender">                
+                            #{item.gender}
+                        </p:column>
+
+                        <p:column headerText="Nationality">                
+                            #{item.nationality}
+                        </p:column>
+
+                        <p:column headerText="Date of Birth">                
+                            #{item.dob}
+                        </p:column>
+
+                        <p:column headerText="Option" style="text-align: center; width:110px;">                                    
+                                <p:commandButton value="Edit" action="#{nominee.doSetSelectedRow()}"
+                                                 oncomplete="PF('editdialog').show()" update=":dtform:editpane" icon="ui-icon-pencil">
+                                    <f:setPropertyActionListener target="#{nominee}" value="#{item}"/>
+                                </p:commandButton>
+                                <p:spacer width="5"/>
+                                <p:commandButton value="Delete" action="#{nominee.deleteData()}" icon="ui-icon-close" update=":dtform:grl,:dtform:dtt">
+                                    <f:setPropertyActionListener target="#{nominee}" value="#{item}"/>
+                                </p:commandButton>
+                            </p:column>                
+                    </p:dataTable>
+
+                    
+                    <p:dialog id="dialog" widgetVar="editdialog" showEffect="clip" hideEffect="fold" resizable="false" header="Edit Nominee:">
+                        <p:panelGrid id="editpane"  columns="2">
+
+                            <p:outputLabel value="Nric :"/>
+                            <p:inputText value="#{nominee.nric}" readonly="true"/>
+
+                            <p:outputLabel value="Given Name :"/>                
+                            <p:inputText value="#{nominee.givenname}"/>
+
+                            <p:outputLabel value="Address :"/>                
+                            <p:inputTextarea value="#{nominee.address}"/>
+
+                            <p:outputLabel value="Gender :"/>                
+                            <p:selectOneRadio id="sex" value="#{nominee.gender}" >
+                                <f:selectItem itemLabel="Male" itemValue="male"  />
+                                <f:selectItem itemLabel="Female" itemValue="female" />
+                            </p:selectOneRadio>
+
+                            <p:outputLabel value="Nationality :"/>                
+                            <p:inputText value="#{nominee.nationality}"/>
+
+                            <p:outputLabel value="Date of Birth :"/>
+                            <p:calendar id="dob" navigator="true" value="#{nominee.dob}"/>
+                            <p:spacer/>
+                            <p:commandButton value="Update" action="#{nominee.updateData()}" update=":dtform:grl,:dtform:dtt" oncomplete="PF('editdialog').hide()"/>
+                        </p:panelGrid>
+
+                    </p:dialog>
+                </h:form>   
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

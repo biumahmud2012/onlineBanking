@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Nominee Registration</title>
+
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form enctype="multipart/form-data" > 
+                <p:growl id="msg" showDetail="true" life="1000"/>
+                <p:outputPanel>
+                    <!--      <p:panel header="Add new Customer" styleClass="pg"> -->
+                    <p:panelGrid columns="2" styleClass="pg">
+                        <p:outputLabel  value="NRIC: " />
+                        <p:inputText  value="#{nominee.nric}" required="true" requiredMessage="Required Field must not empty"/>
+
+                        <p:outputLabel  value="Given Name: " />
+                        <p:inputText  value="#{nominee.givenname}" required="true" requiredMessage="Required Field must not empty"/>
+                        <p:outputLabel value="Nominee Photo :"/>
+                        <p:fileUpload value="#{nominee.uploadPhoto}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>
+                        <p:outputLabel  value="Address: " />
+                        <p:inputTextarea  value="#{nominee.address}" required="true" requiredMessage="Required Field must not empty"/>
+                        <p:outputLabel value="Gender: " />
+                        <p:selectOneRadio   value="#{nominee.gender}" required="true" requiredMessage="Required Field must not empty">
+                            <f:selectItem itemLabel="Male" itemValue="male"/>
+                            <f:selectItem itemLabel="Female" itemValue="female"/>
+                        </p:selectOneRadio>
+                        <p:outputLabel value="Nationality: " />
+                        <p:inputText   value="#{nominee.nationality}" required="true" requiredMessage="Required Field must not empty"/>
+                        <p:outputLabel value="Date of Birth: " />
+                        <p:calendar  value="#{nominee.dob}" mode="popup" navigator="true" required="true" requiredMessage="Required Field must not empty"/>
+                        <f:facet name="footer">
+                            <h:commandButton value="Add Nominee" action="#{nominee.addNominee()}" />
+                        </f:facet>
+                    </p:panelGrid> 
+
+                    <!--    </p:panel>  -->
+                </p:outputPanel>
+            </h:form>
+        </f:view>
+    </h:body>
+</html>

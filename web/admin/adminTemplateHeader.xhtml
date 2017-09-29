@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+
+    </h:head>
+
+    <h:body>
+        <div class="navbar-inner">
+            <div style="width: auto;" class="container">
+                <!--                <a data-target=".nav-collapse" data-toggle="collapse"
+                                   class="btn btn-navbar"> <span class="icon-bar"></span> <span
+                                        class="icon-bar"></span> <span class="icon-bar"></span>
+                                </a>-->
+                <h:link outcome="about.xhtml" class="brand">iBanking of ESAD-J2EE Team</h:link>
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li><h:outputLink value="../admin/adminPanel.xhtml">Admin Home</h:outputLink></li>
+
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" 
+                               href="#">Customer <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><h:link outcome="customerRegistration.xhtml">Add Customer</h:link></li>
+                                <li><h:link outcome="customer.xhtml">Show Customer Details</h:link></li>
+                              <li><h:link outcome="nomineeRegistration.xhtml">Add Nominee</h:link></li>
+                                <li><h:link outcome="nominee.xhtml">Show Nominee Details</h:link></li>
+                                <li><h:link outcome="customer.xhtml">Customer List</h:link></li>
+                                <li><h:link outcome="customer.xhtml">Search Customer</h:link></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown"><a data-toggle="dropdown" class="dropdown-toggle" 
+                                                href="#">Banking Account<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><h:link outcome="account.xhtml">Create New Account</h:link></li>
+                                <li><h:link outcome="account.xhtml">Search Account</h:link></li>
+                                <li><h:link outcome="mapAccount.xhtml">Map Account</h:link></li>
+                                <li><h:link outcome="userRole.xhtml">Add User Role</h:link></li>
+                                <li><h:link outcome="userRoleMap.xhtml">Map User Role</h:link></li>
+                                <li><h:link outcome="custTransaction.xhtml">View Customer Transactions</h:link></li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" 
+                               href="#">Bank Branch<b class="caret"></b></a> 
+                            <ul class="dropdown-menu">
+                                <li><h:link outcome="bankBranch.xhtml">Bank Branch List</h:link></li>
+                                <li><h:link outcome="bankBranch.xhtml">Add New Bank Branch</h:link></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="nav pull-right">
+                        <form action="admin/post/search_account" method="post" class="navbar-search pull-left">
+                            <input name="account_id" type="text" placeholder="Search Bank Account" 
+                                   style="width: 200px;" class="search-query span2" />
+                        </form>
+                        <li class="divider-vertical"></li>
+                        <li class="dropdown">
+                            <!--                            <h:link value="My Home" outcome="{login.goMyHome()}" styleClass="loglink"></h:link>
+                                                        <p:panel rendered="{loginBean.showLogout}" style="float: right; border: 0;">
+                                                            <h:form>                      
+                                                                <p:outputLabel value="{login.roleName} : {login.name}"  styleClass="grbg"/>
+                            
+                                                                <p:commandLink value="log out" action="{login.logout()}" styleClass="loglink"/>
+                            
+                                                                <h:link value="My Home" outcome="{login.goMyHome()}" styleClass="loglink"/>
+                                                            </h:form>
+                                                        </p:panel>-->
+
+
+
+                            <!--
+                            -->                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">#{login.name} as #{login.roleName}<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Settings</a></li>
+                                <li class="divider"></li>
+                                
+                                <li><h:link>Logout</h:link>></li>
+                            </ul>
+                        </li>
+                    </ul>
+                     
+                </div>
+
+            </div>
+        </div>
+    </h:body>
+
+</html>

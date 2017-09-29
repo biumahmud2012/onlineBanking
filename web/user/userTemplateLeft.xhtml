@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+
+    </h:head>
+
+    <h:body>
+        <div id="sidebar" class="span4">
+            <div class="btn-group">
+                <a class="btn dropdown-toggle btn-large btn-inverse"
+                   data-toggle="dropdown"  outcome="#">Choose Account
+                    <span class="caret"></span>
+                </a>
+            </div>
+            <div id='cssmenu'>
+                <ul>
+                    <li class='active'>
+                        <h:link outcome="accountDetails.xhtml">
+                            <p:graphicImage value="../images/show_balance.svg" width="25px" height="25px"/>
+                            <span class="menu_link">Account Details</span>
+                        </h:link>
+                    </li>
+                    <li class='active'>
+                        <h:link outcome="depositFund.xhtml">
+                            <p:graphicImage value="../images/deposit_money.svg" width="25px" height="25px"/>
+                            <span class="menu_link">DEPOSIT CASH</span>
+                        </h:link>
+                    </li>
+                    <li class='active'>
+                        <h:link outcome="withdrawFund.xhtml">
+                            <p:graphicImage value="../images/withdraw_money.svg" width="25px" height="25px"/>
+                            <span class="menu_link">WITHDRAW CASH</span>
+                        </h:link>
+                    </li>
+                    <li class='active'>
+                        <h:link outcome="transferFund.xhtml">
+                            <p:graphicImage value="../images/transfer_money.svg" width="25px" height="25px"/>
+                            <span class="menu_link">TRANSFER MONEY</span>
+                        </h:link>
+                    </li>
+                    <li class='active'>
+                        <h:link outcome="transHistory.xhtml">
+                            <p:graphicImage value="../images/transaction_history.svg" width="25px" height="25px"/>
+                            <span class="menu_link">TRANSACTION HISTORY</span>
+                        </h:link>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </h:body>
+
+</html>

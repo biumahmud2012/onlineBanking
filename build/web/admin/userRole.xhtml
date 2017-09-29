@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>User Role</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head> 
+    <h:body>
+        <ui:composition template="./adminTemplate.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="userRole"> 
+                        <p:growl id="msg" showDetail="true"/>
+                        <p:panel header="User Role">
+                            <p:panelGrid columns="2">
+                                <p:outputLabel value="Role Name"/>
+                                <p:inputText id="rn" value="#{userRole.role_name}" required="true" requiredMessage="required Field must not empty"/>
+
+
+                                <p:outputLabel value="Role Status"/>
+                                <p:selectOneRadio id="rs"  value="#{userRole.role_status}" required="true" requiredMessage="Required Field must not empty">
+                                    <f:selectItem itemLabel="Active" itemValue="true"/>
+                                    <f:selectItem itemLabel="In Active" itemValue="false"/>
+                                </p:selectOneRadio>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Add User Role" action="#{userRole.addUserRole()}" update="msg, :dtform:dtt"/>
+                                </f:facet>
+                            </p:panelGrid>       
+                        </p:panel>
+                    </h:form>
+
+                    <h:form id="dtform">
+                        <p:growl id="grl" autoUpdate="false" showDetail="true"/>
+                        <p:dataTable id="dtt"  value="#{userRole.detailUserRole}" var="item" editable="true" rowKey="#{item.role_number}" style="font-size: 9pt;">
+
+                            <p:column headerText="SL No." style="text-align: center; width: 50px;">                
+                                #{item.user_role_id}
+                            </p:column>
+                            <p:column headerText="Role Name" style="text-align: center;">
+                                #{item.role_name}
+
+                            </p:column>
+                            <p:column headerText="Status" style="text-align: center; width: 27%">
+                                #{item.role_status}
+
+                            </p:column>
+
+                            <p:column headerText="Option" style="text-align: center; width:110px;">                                    
+                                <p:commandButton value="Edit" action="#{userRole.doSetSelectedRow()}"
+                                                 oncomplete="PF('editdialog').show()" update=":dtform:editpane" icon="ui-icon-pencil" style="font-size: 7pt;">
+                                    <f:setPropertyActionListener target="#{userRole}" value="#{item}"/>
+                                </p:commandButton>
+                                <p:spacer width="5"/>
+                                <p:commandButton value="Delete" action="#{userRole.deleteData()}" icon="ui-icon-close" style="color: #D20005;font-size: 7pt;" update=":dtform:grl,:dtform:dtt">
+                                    <f:setPropertyActionListener target="#{userRole}" value="#{item}"/>
+                                </p:commandButton>
+                            </p:column>              
+                        </p:dataTable>
+
+                        <p:dialog id="dialog" widgetVar="editdialog" showEffect="clip" hideEffect="fold" resizable="false" header="Edit User Role">
+                            <p:panelGrid id="editpane"  columns="2">
+
+                                <p:outputLabel value="Role Name :"/>
+                                <p:inputText value="#{userRole.role_name}" readonly="true"/>
+
+                                <p:outputLabel value="Role Status :"/>
+                                <p:selectOneRadio id="rs"  value="#{userRole.role_status}">
+                                    <f:selectItem itemLabel="Active" itemValue="true"/>
+                                    <f:selectItem itemLabel="In Active" itemValue="false"/>
+                                </p:selectOneRadio>
+                                <p:spacer/>
+                                <p:commandButton value="Update" action="#{userRole.updateData()}" update=":dtform:grl,:dtform:dtt" oncomplete="PF('editdialog').hide()"/>
+                            </p:panelGrid>
+
+                        </p:dialog>
+                    </h:form>   
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

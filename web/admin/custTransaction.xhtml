@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Customer Transaction</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./adminTemplate.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="cust_transaction"> 
+                        <p:growl id="msg" showDetail="true"/>
+                        <p:panel header="Make your Transaction">
+                            <p:panelGrid columns="2">
+
+                                <h:outputLabel value="Account ID :"/>
+                                <p:selectOneMenu value="#{custTransaction.account_id}" id="accID">  
+                                    <f:selectItem itemLabel="Select Account" itemValue=""/>
+                                    <f:selectItems value="#{custTransaction.addCustomerAc()}"/>
+                                    <p:ajax event="change" update="acCustID acCustName" listener="#{custTransaction.addCustName()}"/>
+                                </p:selectOneMenu>
+
+                                <h:outputLabel value="Account Customer ID : "/>
+                                <p:inputText id="acCustID" value="#{custTransaction.acCustID}" readonly="true"/>
+                                
+                                <h:outputLabel value="Account Customer Name : "/>
+                                <p:inputText id="acCustName" value="#{custTransaction.acCustName}" readonly="true"/>
+                                
+                                
+                                <h:outputLabel value="Account ID to :"/>
+                                <p:selectOneMenu value="#{custTransaction.account_id_to}" id="accIDto" required="true" requiredMessage="Required Field must not empty">  
+                                    <f:selectItem itemLabel="Select Account" itemValue="0" />
+                                    <f:selectItems value="#{custTransaction.addCustomerAc()}"/>
+                                </p:selectOneMenu>
+                                
+                                
+
+                                <h:outputLabel value="Transaction Type : "/>
+                                <p:selectOneRadio id="tType"  value="#{custTransaction.transaction_type}" required="true" requiredMessage="Required Field must not empty">
+                                    <f:selectItem itemLabel="Deposite" itemValue="deposite"/>
+                                    <f:selectItem itemLabel="Withdraw" itemValue="withdraw"/>
+                                    <f:selectItem itemLabel="Transfer" itemValue="transfer"/>
+                                </p:selectOneRadio>
+
+                                <h:outputLabel value="Transaction Amount : "/>
+                                <p:inputText id="transAmount" value="#{custTransaction.transaction_amount}" required="true" requiredMessage="Required Field must not empty"/>
+
+                                <h:outputLabel value="Current Balance : "/>
+                                <p:inputText id="curBal" value="#{custTransaction.currentBallance}" required="true" requiredMessage="Required Field must not empty"/>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Make Transaction" action="#{custTransaction.addTransaction()}" update="msg, :dtform"/>
+                                    <p:commandButton value="See Current Balance" action="#{custTransaction.currentBalance()}" update="curBal"/>
+                                </f:facet> 
+                            </p:panelGrid>
+                        </p:panel> 
+                    </h:form>
+
+                    <h:form id="dtform">
+                        <p:growl id="grl" autoUpdate="false" showDetail="true"/>
+                        <p:dataTable id="dtt"  value="#{custTransaction.detailCustTransaction}" var="item" editable="true" rowKey="#{item.transaction_number}">
+
+                            <p:column headerText="SL No.">                
+                                #{item.transaction_id}
+                            </p:column>
+                            
+                            <p:column headerText="Account Id">
+                                #{item.account_id}
+                            </p:column>
+                            
+                            <p:column headerText="Account Id to">
+                                #{item.account_id_to}
+                            </p:column>
+
+                            <p:column headerText="Transaction Type">
+                                #{item.transaction_type}
+                            </p:column>
+                            
+                            <p:column headerText="Transaction Amount ">
+                                #{item.transaction_amount}
+                            </p:column>
+
+                            <p:column headerText="Tranaction Time">
+                                #{item.transaction_time}
+                            </p:column>
+
+                            <p:column headerText="Option" >                                    
+                                <p:commandButton value="Edit" action="#{custTransaction.doSetSelectedRow()}"
+                                                 oncomplete="PF('editdialog').show()" update=":dtform:editpane" icon="ui-icon-pencil" style="font-size: 7pt;">
+                                    <f:setPropertyActionListener target="#{custTransaction}" value="#{item}"/>
+                                </p:commandButton>
+                                <p:spacer width="5"/>
+                                <p:commandButton value="Delete" action="#{custTransaction.deleteData()}" icon="ui-icon-close" style="color: #D20005;font-size: 7pt;" update=":dtform:grl,:dtform:dtt">
+                                    <f:setPropertyActionListener target="#{custTransaction}" value="#{item}"/>
+                                </p:commandButton>
+                            </p:column>              
+                        </p:dataTable>
+
+                        <p:dialog id="dialog" widgetVar="editdialog" showEffect="clip" hideEffect="fold" resizable="false" header="Edit User Role">
+                            <p:panelGrid id="editpane"  columns="2">
+
+                                <p:outputLabel value="Account Id :"/>
+                                <p:inputText value="#{custTransaction.account_id}"/>
+
+                                <p:outputLabel value="Account Id to :"/>                
+                                <p:inputText value="#{custTransaction.account_id_to}"/>
+
+                                <p:outputLabel value="Transaction Type :"/>                
+                                <p:inputText value="#{custTransaction.transaction_type}"/>
+
+                                <p:outputLabel value="Transaction amount :"/>                
+                                <p:inputText value="#{custTransaction.transaction_amount}"/>
+
+                                <p:outputLabel value="Transaction Time :"/>                
+                                <p:calendar value="#{custTransaction.transaction_time}"/>
+                                <p:spacer/>
+                                <p:commandButton value="Update" action="#{custTransaction.updateData()}" update=":dtform:grl,:dtform:dtt" oncomplete="PF('editdialog').hide()"/>
+                            </p:panelGrid>
+
+                        </p:dialog>
+                    </h:form>    
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

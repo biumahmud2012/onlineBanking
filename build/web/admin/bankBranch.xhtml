@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head> 
+        <title>Registration</title>   
+    </h:head> 
+    <h:body>
+        <ui:composition template="./adminTemplate.xhtml">
+
+            <ui:define name="content">
+                <h:form id="bankBranch"> 
+                    <p:panel header="Add Bank Branch">
+                        <p:growl id="msg" showDetail="true"/>
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Name"/>  
+                            <p:inputText  id="name" value="#{bankBranch.name}" required="true" requiredMessage="Required Field must not empty"/>
+
+                            <h:outputText value="Location"/>
+                            <p:inputText id="location" value="#{bankBranch.location}" required="true" requiredMessage="Required Field must not empty"/>
+
+                            <h:outputText value="Description"/>
+                            <p:inputText  id="description" value="#{bankBranch.description}" required="true" requiredMessage="Required Field must not empty"/>
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Add Bank Branch" action="#{bankBranch.addBankBranch()}" update="msg, :dtform"/>
+                            </f:facet>
+                        </p:panelGrid>       
+                    </p:panel>
+                </h:form> 
+
+                <h:form id="dtform">
+                    <p:growl id="grl" autoUpdate="false" showDetail="true"/>
+                    <p:dataTable id="dtt"  value="#{bankBranch.detailBankBranch}" var="item" editable="true" rowKey="#{item.bankBranchNumber}">
+
+                        <p:column headerText="SL No.">                
+                            #{item.bank_branch_id}
+                        </p:column>
+                        <p:column headerText="Name">
+                            #{item.name}
+
+                        </p:column>
+                        <p:column headerText="Location">
+                            #{item.location}
+
+                        </p:column>
+                        <p:column headerText="Description">
+                            #{item.description}
+                        </p:column>
+
+                        <p:column headerText="Option">                                    
+                            <p:commandButton value="Edit" action="#{bankBranch.doSetSelectedRow()}"
+                                             oncomplete="PF('editdialog').show()" update=":dtform:editpane" icon="ui-icon-pencil" style="font-size: 7pt;">
+                                <f:setPropertyActionListener target="#{bankBranch}" value="#{item}"/>
+                            </p:commandButton>
+                            <p:spacer width="5"/>
+                            <p:commandButton value="Delete" action="#{bankBranch.deleteData()}" icon="ui-icon-close" update=":dtform:grl,:dtform:dtt" style="color: #D20005;font-size: 7pt;">
+                                <f:setPropertyActionListener target="#{bankBranch}" value="#{item}"/>
+                            </p:commandButton>
+                        </p:column>              
+                    </p:dataTable>
+
+                    <p:dialog id="dialog" widgetVar="editdialog" showEffect="clip" hideEffect="fold" resizable="false" header="Edit User Role">
+                        <p:panelGrid id="editpane"  columns="2">
+
+                            <p:outputLabel value=" Name :"/>
+                            <p:inputText value="#{bankBranch.name}" readonly="true"/>
+
+                            <p:outputLabel value="Location :"/>                
+                            <p:inputText value="#{bankBranch.location}" readonly="true"/>
+
+                            <p:outputLabel value="Description :"/>                
+                            <p:inputText value="#{bankBranch.description}"/>
+                            <p:spacer/>
+                            <p:commandButton value="Update" action="#{bankBranch.updateData()}" update=":dtform:grl,:dtform:dtt" oncomplete="PF('editdialog').hide()"/>
+                        </p:panelGrid>
+
+                    </p:dialog> 
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Customer Details</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./adminTemplate.xhtml">
+
+            <ui:define name="content">
+               
+      <h:form id="dtform" >
+                    <p:growl id="grl" autoUpdate="false" showDetail="true"/>
+                    <p:dataTable id="dtt"  value="#{customer.detailCustomer}" var="item" editable="true" rowKey="#{item.customer_number}" class="table-condensed">
+
+                        <p:column headerText="Cust ID" >                
+                            #{item.customer_id}
+                        </p:column>
+                        
+                        <p:column headerText="NRIC" >
+                            #{item.nric}
+                        </p:column>
+                        
+                        <p:column headerText="User Name">
+                            #{item.username}
+                        </p:column>
+                        
+                        <p:column headerText="Password" >
+                            #{item.password}
+                        </p:column>
+                        
+                        <p:column headerText="Given Name" >
+                            #{item.givenname}
+                        </p:column>
+                        
+                         <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Image" />
+                                </f:facet>
+                             <h:outputLink value="DisplayCustImage?customer_id=#{item.customer_id}" target="_blank" >
+                                 <h:graphicImage value="DisplayCustImage?customer_id=#{item.customer_id}" width="50" height="50"></h:graphicImage>
+                                </h:outputLink>
+                            </p:column>
+                        <p:column headerText="Address">
+                            #{item.address}
+                        </p:column>
+                        
+                        <p:column headerText="Gender" >
+                            #{item.gender}
+                        </p:column>
+                        
+                        <p:column headerText="Nationality">
+                            #{item.nationality}
+                        </p:column>
+                        
+                        <p:column headerText="Date of Birth">
+                            #{item.dob}
+                        </p:column>
+                        
+                        <p:column headerText="Date of Join">
+                            #{item.date_of_join}
+                        </p:column>
+
+                        <p:column headerText="Approval Officer">
+                            #{item.approval_officer}
+                        </p:column>
+                        
+                        <p:column headerText="Approval Manager">
+                            #{item.approval_manager}
+                        </p:column>
+                        
+                        <p:column headerText="Option">                                    
+                            <p:commandButton value="Edit" action="#{customer.doSetSelectedRow()}"
+                                             oncomplete="PF('editdialog').show()" update=":dtform:editpane" icon="ui-icon-pencil" style="font-size: 7pt;">
+                                <f:setPropertyActionListener target="#{customer}" value="#{item}"/>
+                            </p:commandButton>
+                            <p:commandButton value="Delete" action="#{customer.deleteData()}" icon="ui-icon-close" style="color: #D20005;font-size: 7pt;" update=":dtform:grl,:dtform:dtt">
+                                <f:setPropertyActionListener target="#{customer}" value="#{item}"/>
+                            </p:commandButton>
+                        </p:column>              
+                    </p:dataTable>
+
+                    <p:dialog id="dialog" widgetVar="editdialog" showEffect="clip" hideEffect="fold" resizable="false" header="Edit Customer Information">
+                        <p:panelGrid id="editpane"  columns="2">
+
+                            <p:outputLabel value="NRIC :"/>
+                            <p:inputText value="#{customer.nric}" readonly="true"/>
+
+                            <p:outputLabel value="User Name :"/>                
+                            <p:inputText value="#{customer.username}" readonly="true"/>
+
+                            <p:outputLabel value="Password :"/>                
+                            <p:password value="#{customer.password}"/>
+
+                            <p:outputLabel value="Given Name :"/>                
+                            <p:inputText value="#{customer.givenname}"/>
+
+                            <p:outputLabel value="Address :"/>                
+                            <p:inputTextarea value="#{customer.address}"/>
+
+                            <p:outputLabel value="Gender :"/>                
+                            <p:selectOneRadio id="sex"  value="#{customer.gender}">
+                                <f:selectItem itemLabel="Male" itemValue="male"/>
+                                <f:selectItem itemLabel="Female" itemValue="female"/>
+                            </p:selectOneRadio>
+
+                            <p:outputLabel value="Nationality :"/>                
+                            <p:inputText value="#{customer.nationality}"/>
+
+                            <h:outputLabel value="Date of Birth: " />
+                            <p:calendar value="#{customer.dob}" mode="popup" navigator="true"/>
+
+                            <h:outputLabel  value="Date of Join: " />
+                            <p:calendar value="#{customer.date_of_join}" mode="popup" navigator="true" readonly="true"/>
+
+                            <p:outputLabel value="Officer Approval: "/>
+                            <p:selectOneRadio id="oa"  value="#{customer.approval_officer}">
+                                <f:selectItem itemLabel="Active" itemValue="true"/>
+                                <f:selectItem itemLabel="In Active" itemValue="false"/>
+                            </p:selectOneRadio>
+
+                            <p:outputLabel value="Manager Approval: "/>
+                            <p:selectOneRadio id="ma"  value="#{customer.approval_manager}">
+                                <f:selectItem itemLabel="Active" itemValue="true"/>
+                                <f:selectItem itemLabel="In Active" itemValue="false"/>
+                            </p:selectOneRadio>
+                            <p:spacer/>
+                            <p:commandButton value="Update" action="#{customer.updateData()}" update=":dtform:grl,:dtform:dtt" oncomplete="PF('editdialog').hide()"/>
+                        </p:panelGrid>
+
+                    </p:dialog>
+                </h:form>  
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

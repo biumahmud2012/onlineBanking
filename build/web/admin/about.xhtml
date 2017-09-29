@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="./adminTemplate.xhtml">
+            <ui:define name="content">
+                <h1 class="pgheader" style="font-size: 14pt;border: none;margin-left: 20px;">About us</h1>
+                <p align="justify" style="text-indent: 30px;margin-left: 30px;margin-right: 30px;line-height: 1.5em;">
+                    We are the student of IDB-BISEW. IDB-BISEW stands 
+                    for<b> Islamic Development Bank-Bangladesh Islamic Solidarity Educational Wakf </b>. 
+                    They serve the professional IT training course IDB-BISEW Diploma in Enterprise System Analysis &amp; Design with J2EE. 
+                    There are also some other cources under IDB-BISEW. To know more visit 
+                    <a href="http://www.idb-bisew.org" target="_blank"  style="text-decoration: underline;">www.idb-bisew.org</a>.
+                </p>
+                <p align="justify" style="text-indent: 30px;margin-left: 30px;margin-right: 30px;line-height: 1.5em;">
+                    We develop this project as our course ending project. We are not Professional. But now we have confident to work as a java programmer.
+                    We are :
+                    <h:panelGrid columns="2" columnClasses="pfcol,pscol" width="400">
+                        <h:outputLabel value="A.T.M. HASAN"/>
+                        <h:outputLabel value=": Project Leader"/>
+
+                        <h:outputLabel value="Muhammad Habibur Rahman"/>
+                        <h:outputLabel value=": Programmer"/>
+
+                        <h:outputLabel value="Mahmud Hasan"/>
+                        <h:outputLabel value=": Programmer"/>
+
+                        <h:outputLabel value="MD. Mahbul Hasan"/>
+                        <h:outputLabel value=": Programmer"/>
+                    </h:panelGrid>                  
+                </p>
+                <p align="justify" style="text-indent: 30px;margin-left: 30px;margin-right: 30px;line-height: 1.5em;">
+                    To find us  <h:link outcome="contactUs.xhtml" value="click here" style="text-decoration: underline;"/>
+
+                </p>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

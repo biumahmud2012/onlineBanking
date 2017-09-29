@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head> 
+     
+    </h:head>
+    <h:body>
+        <ui:composition template="./adminTemplate.xhtml">
+            <ui:define name="content">
+
+                <div id="dashboard" class="row">
+                    <h3 style="text-align: center;border: none;">Welcome to Administration Panel</h3>
+                    <h:panelGrid columns="2" cellpadding="20">
+                        <h:link outcome="customerRegistration.xhtml" class="span4" style="display: block; height: auto;">
+                            <p:graphicImage value="../images/user_add.png" class="img-circle" style="width: 120px;"/>
+                            <h5>New Customer Account</h5>
+                        </h:link>
+                        <h:link outcome="customer.xhtml" style="display: block; height: auto;">
+                            <p:graphicImage value="../images/user_search.png" class="img-circle" style="width: 120px;"/>
+                            <h5>Search Customer Account</h5>
+                        </h:link>
+
+                        <h:link outcome="account.xhtml" style="display: block; height: auto;">
+                            <p:graphicImage value="../images/new_file.png" style="width: 120px;"/>
+                            <h5>New Bank Account</h5>
+                        </h:link>
+
+                        <h:link outcome="account.xhtml" style="display: block; height: auto;">
+                            <p:graphicImage value="../images/search.png" style="width: 120px;"/>
+                            <h5>Search Bank Account</h5>
+                        </h:link>
+
+                    </h:panelGrid>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+
+</html>

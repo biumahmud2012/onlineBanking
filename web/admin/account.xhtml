@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+    <h:head>
+        <title>Add New Account</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./adminTemplate.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="account">
+                        <p:growl id="msg" showDetail="true" life="6000"/>
+                        <p:panel header="Add New Account">
+                            <p:panelGrid columns="2">
+
+                                <h:outputLabel id="pin" value="PIN : "/>
+                                <p:inputText value="#{account.pin}" required="true" requiredMessage="Required Field must not empty"/>
+
+                                <h:outputLabel value="Amount : "/>
+                                <p:inputText id="amount" value="#{account.amount}" required="true" requiredMessage="Required Field must not empty"/>
+
+                                <h:outputLabel value="Account Type : "/>
+                                <p:selectOneRadio id="accountType"  value="#{account.account_type_name}" required="true" requiredMessage="Required Field must not empty">
+                                    <f:selectItem itemLabel="Current Account" itemValue="current"/>
+                                    <f:selectItem itemLabel="Saving Account" itemValue="saving"/>
+                                </p:selectOneRadio>
+
+                                <h:outputLabel value="Bank Branch Id : "/>
+
+                                <p:selectOneMenu value="#{account.bank_branch_name}" id="bnkBranchN" required="true" requiredMessage="Required Field must not empty">  
+                                    <f:selectItem itemLabel="Select Bank Branch" itemValue="" />
+                                    <f:selectItems value="#{account.bankBranchName}"/>
+                                </p:selectOneMenu>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Add Account" action="#{account.addAccount()}" update="msg, :dtform"/>
+                                </f:facet>
+                            </p:panelGrid> 
+                        </p:panel> 
+                    </h:form>
+
+
+                    <h:form id="dtform">
+                        <p:growl id="grl" autoUpdate="false" showDetail="true"/>
+                        <p:dataTable id="dtt"  value="#{account.detailAccount}" var="item" editable="true" rowKey="#{item.account_number}">
+
+                            <p:column headerText="Account ID" style="text-align: center; width: 50px;">                
+                                #{item.account_id}
+                            </p:column>
+                            <p:column headerText="PIN" style="text-align: center; width: 50px;">                
+                                #{item.pin}
+                            </p:column>
+                            <p:column headerText="Amount" style="text-align: center;">
+                                #{item.amount}
+
+                            </p:column>
+                            <p:column headerText="Account Type" style="text-align: center; width: 27%">
+                                #{item.account_type_name}
+
+                            </p:column>
+
+                            <p:column headerText="Bank Branch Name" style="text-align: center; width: 27%">
+                                #{item.bank_branch_name}
+
+                            </p:column>
+
+                            <p:column headerText="Option" style="text-align: center; width:110px;">                                    
+                                <p:commandButton value="Edit" action="#{account.doSetSelectedRow()}"
+                                                 oncomplete="PF('editdialog').show()" update=":dtform:editpane" icon="ui-icon-pencil" style="font-size: 7pt;">
+                                    <f:setPropertyActionListener target="#{account}" value="#{item}"/>
+                                </p:commandButton>
+                                <p:spacer width="5"/>
+                                <p:commandButton value="Delete" action="#{account.deleteData()}" icon="ui-icon-close" style="color: #D20005;font-size: 7pt;" update=":dtform:grl,:dtform:dtt">
+                                    <f:setPropertyActionListener target="#{account}" value="#{item}"/>
+                                </p:commandButton>
+                            </p:column>              
+                        </p:dataTable>
+
+                        <p:dialog id="dialog" widgetVar="editdialog" showEffect="clip" hideEffect="fold" resizable="false" header="Edit Account">
+                            <p:panelGrid id="editpane"  columns="2">
+
+                                <p:outputLabel value="PIN :"/>
+                                <p:inputText value="#{account.pin}"/>
+
+                                <p:outputLabel value="Amount :"/>                
+                                <p:inputText value="#{account.amount}"/>
+
+                                <h:outputLabel value="Account Type : "/>
+                                <p:selectOneRadio id="accountType"  value="#{account.account_type_name}">
+                                    <f:selectItem itemLabel="Current Account" itemValue="current"/>
+                                    <f:selectItem itemLabel="Saving Account" itemValue="saving"/>
+                                </p:selectOneRadio>
+
+                                <h:outputLabel value="Bank Branch Name : "/>
+                                <p:selectOneMenu value="#{account.bank_branch_name}" id="bnkBranchN">  
+                                    <f:selectItem itemLabel="Select Bank Branch" itemValue="" />
+                                    <f:selectItems value="#{account.bankBranchName}"/>
+                                </p:selectOneMenu>
+
+                                <p:spacer/>
+                                <p:commandButton value="Update" action="#{account.updateData()}" update=":dtform:grl,:dtform:dtt" oncomplete="PF('editdialog').hide()"/>
+                            </p:panelGrid>
+
+                        </p:dialog>
+                    </h:form>   
+                </f:view>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

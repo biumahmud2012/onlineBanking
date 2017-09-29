@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title>Customer Entry</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <ui:composition template="./userTemplate.xhtml">  
+            <ui:define name="content">
+
+                <h:form id="dtform" >
+                    <p:dataTable id="dtt"  value="#{customer.detailCustomer}" var="item" editable="true" rowKey="#{item.customer_number}" class="table-condensed">
+
+                        <p:column headerText="Cust ID" >                
+                            #{item.customer_id}
+                        </p:column>
+
+                        <p:column headerText="NRIC" >
+                            #{item.nric}
+                        </p:column>
+
+                        <p:column headerText="User Name">
+                            #{item.username}
+                        </p:column>
+
+                        <p:column headerText="Password" >
+                            #{item.password}
+                        </p:column>
+
+                        <p:column headerText="Given Name" >
+                            #{item.givenname}
+                        </p:column>
+
+                        <p:column headerText="Address">
+                            #{item.address}
+                        </p:column>
+
+                        <p:column headerText="Gender" >
+                            #{item.gender}
+                        </p:column>
+
+                        <p:column headerText="Nationality">
+                            #{item.nationality}
+                        </p:column>
+
+                        <p:column headerText="Date of Birth">
+                            #{item.dob}
+                        </p:column>
+
+                        <p:column headerText="Date of Join">
+                            #{item.date_of_join}
+                        </p:column>
+
+                        <p:column headerText="Approval Officer">
+                            #{item.approval_officer}
+                        </p:column>
+
+                        <p:column headerText="Approval Manager">
+                            #{item.approval_manager}
+                        </p:column>
+
+                    </p:dataTable>
+                </h:form>  
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
